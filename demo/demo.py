@@ -79,7 +79,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
   def do_file(self, filename):
     if filename == "/":
       filename = "/index.html"
-    path = "./demo/%s" % filename
+    path = f"./demo/{filename}"
 
     try:
       with open(path, 'rb') as f:
@@ -115,5 +115,5 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 httpd = HTTPServer((DEMO_HOST, DEMO_PORT), SimpleHTTPRequestHandler)
-print('Server listening on %s:%s' % (DEMO_HOST, DEMO_PORT))
+print(f'Server listening on {DEMO_HOST}:{DEMO_PORT}')
 httpd.serve_forever()

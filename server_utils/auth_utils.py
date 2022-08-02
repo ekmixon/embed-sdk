@@ -64,7 +64,7 @@ class URL:
   def __init__(self, looker, user, embed_url):
     self.looker = looker
     self.user = user
-    self.path = '/login/embed/' + urllib.parse.quote_plus(embed_url)
+    self.path = f'/login/embed/{urllib.parse.quote_plus(embed_url)}'
 
   def set_time(self):
     self.time = json.dumps(int(time.time()))
@@ -110,13 +110,14 @@ class URL:
               'last_name':           self.user.last_name,
               'force_logout_login':  self.user.force_logout_login}
 
-    query_string = '&'.join(["%s=%s" % (key, urllib.parse.quote_plus(val)) for key, val in params.items()])
+    query_string = '&'.join(
+        [f"{key}={urllib.parse.quote_plus(val)}" for key, val in params.items()])
 
-    return "%s%s?%s" % (self.looker.host, self.path, query_string)
+    return f"{self.looker.host}{self.path}?{query_string}"
 
 def create_signed_url(src, user, host, secret):
   looker = Looker(host, secret)
 
   url = URL(looker, user, src)
 
-  return "https://" + url.to_string()
+  return f"https://{url.to_string()}"
